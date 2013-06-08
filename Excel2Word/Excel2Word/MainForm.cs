@@ -1,15 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Forms;
 using System.Data;
 using System.Data.OleDb;
 using System.Collections.Generic;
 
-namespace WindowsFormsApplication1
+namespace Excel2Word
 {
-    public partial class TestForm : Form
+    public partial class MainForm : Form
     {
-        public TestForm()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -17,42 +16,25 @@ namespace WindowsFormsApplication1
         private void buttonStart_Click(object sender, EventArgs e)
         {
             DataSet excelData = ImportFromExcel();
-
             if (0 == excelData.Tables.Count)
             {
                 return;
             }
-            
-            int asd = excelData.Tables[0].Rows.Count;       // 取第一个表中的数据
-            List<int> test = new List<int>();
 
-            
-            for ( int index = 0; index < 10; ++index )
+            int nRowCount = excelData.Tables[0].Rows.Count;
+            int nColCount = excelData.Tables[0].Columns.Count;
+       
+            for(int nRowIndex = 0; nRowIndex < nRowCount; ++nRowIndex)
             {
-                test.Insert(index, index);
-            }
-            for ( int index = 0; index < test.Count; ++index )
-            {
+                List<string> lstColsData = new List<string>();
+                for (int nColIndex = 0; nColIndex < nColCount; ++nColIndex )
+                {
+                    lstColsData.Add(excelData.Tables[0].Rows[nRowIndex][nColIndex].ToString());
+                }
             }
         }
 
-
-
-        #region 从Excel文件导入到DataSet
-        
-        //        /// <summary>
-        //        /// 从Excel导入文件
-        //        /// </summary>
-        //        /// <param name="strExcelFileName">Excel文件名</param>
-        //        /// <returns>返回DataSet</returns>
-        //        public DataSet ImportFromExcel(string strExcelFileName)
-        //        {
-        //            return doImport(strExcelFileName);
-        //        }
-        /// <summary>
         /// 从选择的Excel文件导入
-        /// </summary>
-        /// <returns>DataSet</returns>
         public DataSet ImportFromExcel()
         {
             DataSet dataSet = new DataSet();
@@ -63,11 +45,7 @@ namespace WindowsFormsApplication1
             return dataSet;
         }
 
-        /// <summary>
         /// 从指定的Excel文件导入
-        /// </summary>
-        /// <param name="strFileName">Excel文件名</param>
-        /// <returns>DataSet</returns>
         public DataSet ImportFromExcel(string strFileName)
         {
             DataSet dataSet = new DataSet();
@@ -75,11 +53,7 @@ namespace WindowsFormsApplication1
             return dataSet;
         }
 
-        /// <summary>
         /// 执行导入
-        /// </summary>
-        /// <param name="strFileName">文件名</param>
-        /// <returns>DataSet</returns>
         private DataSet doImport(string strFileName)
         {
             if (strFileName == "")
@@ -95,13 +69,18 @@ namespace WindowsFormsApplication1
             OleDbConnection conn = new OleDbConnection(strConn);
             conn.Open();
             OleDbDataAdapter myCommand;
-            //获取文件中TABLE类型的表
+            // 获取文件中TABLE类型的表
+            
+            // TODO:
+            // 此处可以改为读取多个DataTable, 现阶段为只读取第一个Sheet中的数据
+            //
+
             DataTable schemaTable = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
             DataSet dsExcel = new DataSet();
             try
             {
-                DataRow dr = schemaTable.Rows[0];
-                ExcelTableName = dr["TABLE_NAME"].ToString().Trim();
+                DataRow dataRow = schemaTable.Rows[0];
+                ExcelTableName = dataRow["TABLE_NAME"].ToString().Trim();
                 //从对应Excel内容的表中获取数据
                 string strExcel = "select * from [" + ExcelTableName + "]";
                 myCommand = new OleDbDataAdapter(strExcel, strConn);
@@ -117,6 +96,5 @@ namespace WindowsFormsApplication1
             }
             return dsExcel;
         }
-        #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-namespace WindowsFormsApplication1
+namespace Excel2Word
 {
-    partial class TestForm
+    partial class MainForm
     {
         /// <summary>
         /// 必需的设计器变量。
