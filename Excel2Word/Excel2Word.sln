@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excel2Word", "Excel2Word\Excel2Word.csproj", "{F8DC4C24-94F9-44D9-8BE9-2B4A440B13F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandleWord", "HandleWord\HandleWord.csproj", "{18ED620F-88F6-4DE4-BB41-B9CD2C4B97E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,10 @@ Global
 		{F8DC4C24-94F9-44D9-8BE9-2B4A440B13F9}.Debug|x86.Build.0 = Debug|x86
 		{F8DC4C24-94F9-44D9-8BE9-2B4A440B13F9}.Release|x86.ActiveCfg = Release|x86
 		{F8DC4C24-94F9-44D9-8BE9-2B4A440B13F9}.Release|x86.Build.0 = Release|x86
+		{18ED620F-88F6-4DE4-BB41-B9CD2C4B97E4}.Debug|x86.ActiveCfg = Debug|x86
+		{18ED620F-88F6-4DE4-BB41-B9CD2C4B97E4}.Debug|x86.Build.0 = Debug|x86
+		{18ED620F-88F6-4DE4-BB41-B9CD2C4B97E4}.Release|x86.ActiveCfg = Release|x86
+		{18ED620F-88F6-4DE4-BB41-B9CD2C4B97E4}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

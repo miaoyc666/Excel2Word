@@ -23,11 +23,11 @@ namespace Excel2Word
 
             int nRowCount = excelData.Tables[0].Rows.Count;
             int nColCount = excelData.Tables[0].Columns.Count;
-       
-            for(int nRowIndex = 0; nRowIndex < nRowCount; ++nRowIndex)
+
+            for (int nRowIndex = 0; nRowIndex < nRowCount; ++nRowIndex)
             {
                 List<string> lstColsData = new List<string>();
-                for (int nColIndex = 0; nColIndex < nColCount; ++nColIndex )
+                for (int nColIndex = 0; nColIndex < nColCount; ++nColIndex)
                 {
                     lstColsData.Add(excelData.Tables[0].Rows[nRowIndex][nColIndex].ToString());
                 }
@@ -46,31 +46,31 @@ namespace Excel2Word
         }
 
         /// 从指定的Excel文件导入
-        public DataSet ImportFromExcel(string strFileName)
+        public DataSet ImportFromExcel(string strFileName_)
         {
             DataSet dataSet = new DataSet();
-            dataSet = doImport(strFileName);
+            dataSet = doImport(strFileName_);
             return dataSet;
         }
 
         /// 执行导入
-        private DataSet doImport(string strFileName)
+        private DataSet doImport(string strFileName_)
         {
-            if (strFileName == "")
+            if (strFileName_ == "")
             {
                 return null;
             }
 
             string ExcelTableName = "";
             string strConn = "Provider=Microsoft.Ace.OleDb.12.0;" +
-                "Data Source=" + strFileName + ";" +
+                "Data Source=" + strFileName_ + ";" +
                 "Extended Properties='Excel 8.0;HDR=NO;IMEX=1';";
 
             OleDbConnection conn = new OleDbConnection(strConn);
             conn.Open();
             OleDbDataAdapter myCommand;
             // 获取文件中TABLE类型的表
-            
+
             // TODO:
             // 此处可以改为读取多个DataTable, 现阶段为只读取第一个Sheet中的数据
             //
@@ -95,6 +95,12 @@ namespace Excel2Word
                 conn.Close();
             }
             return dsExcel;
+        }
+
+        /// 执行导出
+        private bool doExport(string strFileName_)
+        {
+            return true;
         }
     }
 }
