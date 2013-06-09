@@ -9,9 +9,7 @@ namespace Excel2Word
 {
     public partial class MainForm : Form
     {
-        private _Application wordApp = null;
-        private _Document wordDoc = null;
-
+        CreateReport.HandleWord wordObj;
         public MainForm()
         {
             InitializeComponent();
@@ -25,20 +23,20 @@ namespace Excel2Word
                 return;
             }
 
-            int nRowCount = excelData.Tables[0].Rows.Count;
-            int nColCount = excelData.Tables[0].Columns.Count;
+            string path = @"D:\浙江省质量检测研究院\serverData\通过的表单\test.docx";              //存放pass表单的文件夹
+            doExport(excelData, path);
 
-            for (int nRowIndex = 0; nRowIndex < nRowCount; ++nRowIndex)
-            {
-                List<string> lstColsData = new List<string>();
-                for (int nColIndex = 0; nColIndex < nColCount; ++nColIndex)
-                {
-                    lstColsData.Add(excelData.Tables[0].Rows[nRowIndex][nColIndex].ToString());
-                }
-            }
+            //int nRowCount = excelData.Tables[0].Rows.Count;
+            //int nColCount = excelData.Tables[0].Columns.Count;
 
-            string path = @"D:\浙江省质量检测研究院\serverData\通过的表单\test.docx"; //存放pass表单的文件夹
-            CreateNewDocument(path);
+            //for (int nRowIndex = 0; nRowIndex < nRowCount; ++nRowIndex)
+            //{
+            //    List<string> lstColsData = new List<string>();
+            //    for (int nColIndex = 0; nColIndex < nColCount; ++nColIndex)
+            //    {
+            //        lstColsData.Add(excelData.Tables[0].Rows[nRowIndex][nColIndex].ToString());
+            //    }
+            //}
         }
 
         /// 从选择的Excel文件导入
@@ -105,24 +103,10 @@ namespace Excel2Word
         }
 
         /// 执行导出
-        private bool doExport(string strFileName_)
+        private bool doExport(DataSet dataSet_, string strFileName_)
         {
+            wordObj.CreateNewDocument(strFileName_);
             return true;
-        }
-
-        //通过模板创建新文档
-        public void CreateNewDocument(string filePath)
-        {
-            //killWinWordProcess();
-            wordApp = new ApplicationClass();
-            wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
-            wordApp.Visible = false;
-            object missing = System.Reflection.Missing.Value;
-            object templateName = filePath;
-            wordDoc = wordApp.Documents.Open(ref templateName, ref missing,
-                ref missing, ref missing, ref missing, ref missing, ref missing,
-                ref missing, ref missing, ref missing, ref missing, ref missing,
-                ref missing, ref missing, ref missing, ref missing);
         }
     }
 }

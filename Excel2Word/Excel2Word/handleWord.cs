@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Office.Interop.Word;
 
-namespace CreateReport 
+namespace CreateReport
 {
-    class handleWord 
+    class HandleWord 
     {
         private _Application wordApp = null;
         private _Document wordDoc = null;
@@ -49,8 +49,7 @@ namespace CreateReport
         }
 
         //保存新文件
-        public void SaveDocument(string filePath) 
-        {
+        public void SaveDocument(string filePath) {
             object fileName = filePath;
             object format = WdSaveFormat.wdFormatDocument;//保存格式
             object miss = System.Reflection.Missing.Value;
