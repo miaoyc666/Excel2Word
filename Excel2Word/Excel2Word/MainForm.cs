@@ -3,11 +3,15 @@ using System.Windows.Forms;
 using System.Data;
 using System.Data.OleDb;
 using System.Collections.Generic;
+using Microsoft.Office.Interop.Word;
 
 namespace Excel2Word
 {
     public partial class MainForm : Form
     {
+        private _Application wordApp = null;
+        private _Document wordDoc = null;
+
         public MainForm()
         {
             InitializeComponent();
@@ -32,6 +36,9 @@ namespace Excel2Word
                     lstColsData.Add(excelData.Tables[0].Rows[nRowIndex][nColIndex].ToString());
                 }
             }
+
+            string path = @"D:\浙江省质量检测研究院\serverData\通过的表单\test.docx"; //存放pass表单的文件夹
+            CreateNewDocument(path);
         }
 
         /// 从选择的Excel文件导入
@@ -101,6 +108,21 @@ namespace Excel2Word
         private bool doExport(string strFileName_)
         {
             return true;
+        }
+
+        //通过模板创建新文档
+        public void CreateNewDocument(string filePath)
+        {
+            //killWinWordProcess();
+            wordApp = new ApplicationClass();
+            wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+            wordApp.Visible = false;
+            object missing = System.Reflection.Missing.Value;
+            object templateName = filePath;
+            wordDoc = wordApp.Documents.Open(ref templateName, ref missing,
+                ref missing, ref missing, ref missing, ref missing, ref missing,
+                ref missing, ref missing, ref missing, ref missing, ref missing,
+                ref missing, ref missing, ref missing, ref missing);
         }
     }
 }

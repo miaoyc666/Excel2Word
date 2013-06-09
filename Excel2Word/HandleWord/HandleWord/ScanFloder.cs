@@ -31,7 +31,13 @@ namespace CreateReport
             catch { }
 
             Hashtable allData = new Hashtable();
-            
+
+            ///// 判断 childs 是否为空
+            //if(null == childs)
+            //{
+            //    return;
+            //}
+
             foreach (String dataTable in childs) 
             {    
                 //用来获得一个文件夹中的所有数据
